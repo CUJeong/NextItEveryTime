@@ -24,7 +24,7 @@ class Words extends React.Component{
             return res.json();
         // res.json() 을 리턴한 내용을 Words 클래스 생성자 내에 있는 state 내부 words에 반영    
         }).then(words => this.setState({words: words}));
-    }
+    }// .then은 비동기함수이며, 앞단 함수가 실행
 
     // words의 변경이 있을 경우(다음 상태인 nextState 파라미터 변수가 현재 state 내부 words와 다름) 
     // 리액트가 컴포넌트를 업데이트할 수 있도록 하는 제공함수를 재정의함
@@ -54,6 +54,7 @@ class Words extends React.Component{
                                     <Typography color="textSecondary" gutterBottom>
                                         가중치: {word.weight}
                                     </Typography>
+                                    {/* variant 는 영어 대문자를 작게 하는 설정 */}
                                     <Typography variant="h5" component="h2">
                                         {word.word}
                                     </Typography>
