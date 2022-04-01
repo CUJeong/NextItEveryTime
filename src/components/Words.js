@@ -12,8 +12,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import { mergeClasses } from '@material-ui/styles';
-import { ThumbDownSharp } from '@material-ui/icons';
 
 const styles = theme => ({
     fab: {
@@ -25,7 +23,7 @@ const styles = theme => ({
     }
 });
 
-const databaseURL = "https://nextiteverytime-default-rtdb.firebaseio.com"
+const databaseURL = "https://nextiteverytime-default-rtdb.firebaseio.com";
 
 class Words extends React.Component{
     constructor(){
@@ -107,7 +105,7 @@ class Words extends React.Component{
             weight: this.state.weight
         }
         this.handleDialogToggle();      // 다이얼로그 열린건 닫음
-        if(!word.word && !word.weight){
+        if(!word.word && !word.weight){     // 사용자가 입력한 데이터가 정상적으로 작성이 되어 있지 않은 경우 false
             return;
         }
         this._post(word);
