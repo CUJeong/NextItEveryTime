@@ -37,6 +37,7 @@ class AppShell extends React.Component{
     render(){
         // 아래 export 의 withStyles 파라미터인 style의 요소가 classes에 담겨 사용 가능하다.
         const { classes } = this.props;
+        
         return(
             // 하나의 큰 div 안에 여러 내용 작성해야 하는 구조
             <div>

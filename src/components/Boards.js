@@ -52,7 +52,7 @@ class Boards extends React.Component{
             }
             console.log("파이어베이스에서 데이터 가져옴");
             return res.json();
-        // res.json() 을 리턴한 내용을 Words 클래스 생성자 내에 있는 state 내부 words에 반영    
+        // res.json() 을 리턴한 내용을 클래스 생성자 내에 있는 state 내부 boards에(왼쪽) 반영    
         }).then(boards => this.setState({boards: boards}));
     }// .then은 비동기함수이며, 앞단 함수가 실행
 
@@ -137,8 +137,8 @@ class Boards extends React.Component{
         return (
             <div>
                 {/* 맵(Map) 이용하기 */}
-                {/* 각각의 요소에 접근하여 처리 가능 */}
-                {Object.keys(this.state.boards).map(id => {
+                {/* 각각의 요소에 접근하여 처리 가능. Object.keys(jsonObject) 하면 keyList가 나오는데 reverse()를 하면 순서가 거꾸로 됨 */}
+                {Object.keys(this.state.boards).reverse().map(id => {
                     // for문 처럼 뱅뱅 돌면서 각각에 대해 처리 가능
                     const board = this.state.boards[id];
                     return(
@@ -152,6 +152,7 @@ class Boards extends React.Component{
                                             <tbody>
                                                 <tr>
                                                     <td rowSpan="2">
+                                                        {/* public 폴더 기준으로 경로 설정 */}
                                                         <img src='/img/profile.jpg' alt='empty.jpg' width="60px" height="60px" style={{borderRadius: "25%"}}/>
                                                     </td>
                                                     <td>
