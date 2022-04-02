@@ -86,6 +86,7 @@ class Detail extends React.Component{
         if(!reple.repleField){     // 사용자가 입력한 데이터가 정상적으로 작성이 되어 있지 않은 경우 false
             return;
         }
+        document.getElementById("idRepleField").value = "";
         this._update(board, id);
     }
 
@@ -202,11 +203,18 @@ class Detail extends React.Component{
                                                 </Typography>
                                             </Grid>
                                         </Grid> 
+                                        <Grid container>
+                                            <Grid item xs={12} style={{marginTop: '10px'}}>
+                                                <Typography color="textSecondary">
+                                                    {reple.repleDate}
+                                                </Typography>
+                                            </Grid>
+                                        </Grid> 
                                     </div>
                                 )
                             })}
 
-                            {/* 댓글창 */}
+                            {/* 댓글 입력창 */}
                             <Grid container>
                                 <Grid item xs={9} style={{marginTop: '30px', paddingRight: '10px'}}>
                                     <TextField id="idRepleField" variant="outlined" size="small" type="text"

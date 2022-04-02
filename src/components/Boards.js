@@ -135,8 +135,8 @@ class Boards extends React.Component{
         tempRepleKing[uniqueId] = tempReple;
 
         const board = {
-            title: this.state.title,      // 사용자가 입력한게 우선 필드 state에 담기므로 이를 꺼냄
-            content: this.state.content,
+            title: document.getElementById("idTitle").value,      // 사용자가 입력한게 우선 필드 state에 담기므로 이를 꺼냄
+            content: document.getElementById("idContent").value,
             date: time,
             author: '익명',
             reples: tempRepleKing
@@ -145,6 +145,8 @@ class Boards extends React.Component{
         if(!board.title && !board.content){     // 사용자가 입력한 데이터가 정상적으로 작성이 되어 있지 않은 경우 false
             return;
         }
+        document.getElementById("idTitle").value = "";
+        document.getElementById("idContent").value = "";
         this._post(board);
     }
 
@@ -294,8 +296,8 @@ class Boards extends React.Component{
                 <Dialog open={this.state.dialog} onClose={this.handleDialogToggle}>
                     <DialogTitle>글쓰기</DialogTitle>
                     <DialogContent>
-                        <TextField label="제목" type="text" name="title" value={this.state.title} onChange={this.handleValueChange}/><br/><br/>
-                        <TextField label="내용" type="text" name="content" value={this.state.content} onChange={this.handleValueChange}/><br/>
+                        <TextField id="idTitle" label="제목" type="text" name="title" onChange={this.handleValueChange}/><br/><br/>
+                        <TextField id="idContent" label="내용" type="text" name="content" onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <br/>
                     <DialogActions>
