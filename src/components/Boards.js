@@ -58,7 +58,6 @@ class Boards extends React.Component{
             if(res.status != 200){
                 throw new Error(res.statusText);
             }
-            console.log("파이어베이스에서 데이터 가져옴");
             return res.json();
         // res.json() 을 리턴한 내용을 클래스 생성자 내에 있는 state 내부 boards에(왼쪽) 반영    
         }).then(boards => this.setState({boards: boards}));
@@ -77,6 +76,7 @@ class Boards extends React.Component{
             let nextState = this.state.boards;   // 현재 보유중인 필드 객체를 가져온 다음
             nextState[data.name] = board;
             this.setState({boards: nextState});  // 화면을 보여줌
+            this._get();    // 바로 firebase에서 데이터 다시 긁어옴
         });
     }
 
@@ -116,6 +116,8 @@ class Boards extends React.Component{
     // INSERT 함수(_post)를 실제 실행하는 함수
     handleSubmit = () => {
         const time = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+        const timeId = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '')
+                        .replace("-", "").replace(":", "").replace("-", "").replace(":", "").replace(" ", "");
         const tempReple = {
             repleId: '',
             repleField: '',
@@ -127,7 +129,7 @@ class Boards extends React.Component{
             randStr += Math.floor(Math.random()*10);
         }
 
-        var uniqueId = time + randStr;
+        var uniqueId = timeId + randStr;
 
         const tempRepleKing = {};
         tempRepleKing[uniqueId] = tempReple;
@@ -137,7 +139,7 @@ class Boards extends React.Component{
             content: this.state.content,
             date: time,
             author: '익명',
-            reples: ''
+            reples: tempRepleKing
         }
         this.handleDialogToggle();      // 다이얼로그 열린건 닫음
         if(!board.title && !board.content){     // 사용자가 입력한 데이터가 정상적으로 작성이 되어 있지 않은 경우 false
@@ -165,7 +167,6 @@ class Boards extends React.Component{
                 {Object.keys(this.state.boards).reverse().map(id => {
                     // for문 처럼 뱅뱅 돌면서 각각에 대해 처리 가능
                     const board = this.state.boards[id];
-                    console.log(board);
 
                     return(
                         // for문 한번 돌때마다 외각에 key 속성을 넣어주어야 에러가 안난다.
@@ -217,7 +218,7 @@ class Boards extends React.Component{
                                     </Grid>
 
                                     {/* 답글 달린 갯수가 0이 아니라면 댓글 보기 추가 */}
-                                    {Object.keys(board.reples).length === 0 ? null : 
+                                    {Object.keys(board.reples).length === 1 ? null : 
                                         <div>
                                             <br/>
                                             <br/>
@@ -233,7 +234,7 @@ class Boards extends React.Component{
                                                                 </td>
                                                                 <td>
                                                                     <Typography variant="body1">
-                                                                        &nbsp;{board.reples[Object.keys(board.reples)[0]].repleId}
+                                                                        &nbsp;{board.reples[Object.keys(board.reples)[1]].repleId}
                                                                     </Typography>
                                                                 </td>
                                                             </tr>
@@ -244,7 +245,7 @@ class Boards extends React.Component{
                                             <Grid container>
                                                 <Grid item xs={12} style={{marginTop: '10px'}}>
                                                     <Typography>
-                                                        {board.reples[Object.keys(board.reples)[0]].repleField}
+                                                        {board.reples[Object.keys(board.reples)[1]].repleField}
                                                     </Typography>
                                                 </Grid>
                                             </Grid> 
@@ -263,7 +264,7 @@ class Boards extends React.Component{
                                     }
 
                                     {/* 답글 달린 갯수가 0이라면 댓글 달기 */}
-                                    {Object.keys(board.reples).length === 0 && 
+                                    {Object.keys(board.reples).length === 1 && 
                                         <div>
                                             {/* 답글 모두 보기 */}
                                             <Grid container>

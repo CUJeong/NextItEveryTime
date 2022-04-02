@@ -65,6 +65,8 @@ class Detail extends React.Component{
         const board = boardAll[id];
 
         const time = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+        const timeId = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '')
+                            .replace("-", "").replace(":", "").replace("-", "").replace(":", "").replace(" ", "");
 
         const reple = {
             repleId: '익명',
@@ -77,7 +79,7 @@ class Detail extends React.Component{
             randStr += Math.floor(Math.random()*10);
         }
 
-        var uniqueId = time + randStr;
+        var uniqueId = timeId + randStr;
 
         board["reples"][uniqueId] = reple;
 
@@ -162,10 +164,14 @@ class Detail extends React.Component{
 
                             <br/>
 
-                            {Object.keys(board.reples).length === 0 ? null : 
+                            {Object.keys(board.reples).length === 1 ? null : 
                                 Object.keys(board.reples).reverse().map(idReple => {
 
                                 const reple = board.reples[idReple];
+
+                                if(reple.repleId == ""){
+                                    return(<div key={idReple}></div>);
+                                }
 
                                 return(
                                     <div key={idReple}>
