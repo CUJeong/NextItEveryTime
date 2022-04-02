@@ -8,6 +8,8 @@ import Drawer from '@material-ui/core/Drawer';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Grid from '@material-ui/core/Grid';
+import { Button } from '@material-ui/core';
 
 const styles = {
     root: {
@@ -40,15 +42,36 @@ class AppShell extends React.Component{
             <div>
                 <div className={classes.root}>
                     <AppBar position="static">
-                        <IconButton className={classes.menuButton} color="inherit" onClick={this.handleDrawerToggle}>
-                            <MenuIcon/>
-                        </IconButton>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <IconButton className={classes.menuButton} color="inherit" onClick={this.handleDrawerToggle}>
+                                    <MenuIcon/>
+                                </IconButton>
+                                <Button color="inherit" href="/#" component={Link}>
+                                    Home
+                                </Button>
+                                <Button color="inherit" href="/#/Boards" component={Link}>
+                                    게시판
+                                </Button>
+                                <Button color="inherit" href="/#/Texts" component={Link}>
+                                    텍스트 관리
+                                </Button>
+                                <Button color="inherit" href="/#/Words" component={Link}>
+                                    단어 관리
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </AppBar>
                     {/* Drawer의 open 값이 true가 되면 자동으로 나타나며, false가 되면 들어간다. */}
                     <Drawer open={this.state.toggle}>
                         <MenuItem onClick={this.handleDrawerToggle}>
                             <Link component={RouterLink} to="/">
                                 홈 화면
+                            </Link>
+                        </MenuItem>
+                        <MenuItem onClick={this.handleDrawerToggle}>
+                            <Link component={RouterLink} to="/Boards">
+                                게시판
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={this.handleDrawerToggle}>

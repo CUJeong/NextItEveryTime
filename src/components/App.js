@@ -4,6 +4,7 @@ import AppShell from './AppShell';
 import Home from './Home';
 import Texts from './Texts';
 import Words from './Words';
+import Boards from './Boards';
 import Detail from './Detail';
 
 
@@ -17,6 +18,7 @@ class App extends React.Component{
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/texts" component={Texts}/>
                         <Route exact path="/words" component={Words}/>
+                        <Route exact path="/boards" component={Boards}/>
                         <Route exact path="/detail/:textId" component={Detail}/>
                     </div>
                 </AppShell>
