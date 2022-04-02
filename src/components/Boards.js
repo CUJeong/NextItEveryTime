@@ -2,6 +2,8 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import {Link as RouterLink} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -12,6 +14,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+
+
 
 const styles = theme => ({
     fab: {
@@ -38,7 +42,11 @@ class Boards extends React.Component{
             title: '',
             content: '',
             date: '',
-            id: ''
+            author: '',
+            reples: {},
+            repleId: '',
+            repleField: '',
+            repleDate: ''
         };
     }
 
@@ -108,12 +116,28 @@ class Boards extends React.Component{
     // INSERT 함수(_post)를 실제 실행하는 함수
     handleSubmit = () => {
         const time = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+        const tempReple = {
+            repleId: '',
+            repleField: '',
+            repleDate: ''
+        }
+
+        var randStr = '';
+        for(var i = 0; i < 6; i++){
+            randStr += Math.floor(Math.random()*10);
+        }
+
+        var uniqueId = time + randStr;
+
+        const tempRepleKing = {};
+        tempRepleKing[uniqueId] = tempReple;
 
         const board = {
             title: this.state.title,      // 사용자가 입력한게 우선 필드 state에 담기므로 이를 꺼냄
             content: this.state.content,
             date: time,
-            author: '익명'
+            author: '익명',
+            reples: ''
         }
         this.handleDialogToggle();      // 다이얼로그 열린건 닫음
         if(!board.title && !board.content){     // 사용자가 입력한 데이터가 정상적으로 작성이 되어 있지 않은 경우 false
@@ -141,6 +165,8 @@ class Boards extends React.Component{
                 {Object.keys(this.state.boards).reverse().map(id => {
                     // for문 처럼 뱅뱅 돌면서 각각에 대해 처리 가능
                     const board = this.state.boards[id];
+                    console.log(board);
+
                     return(
                         // for문 한번 돌때마다 외각에 key 속성을 넣어주어야 에러가 안난다.
                         <div key={id}>
@@ -176,7 +202,7 @@ class Boards extends React.Component{
                                     <br/>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Typography variant="h4" component="h3">
+                                            <Typography variant="h5">
                                                 {board.title}
                                             </Typography>
                                         </Grid>
@@ -184,11 +210,73 @@ class Boards extends React.Component{
                                     <br/>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Typography variant="h5" component="h3">
+                                            <Typography variant="h6">
                                                 {board.content}
                                             </Typography>
                                         </Grid>
                                     </Grid>
+
+                                    {/* 답글 달린 갯수가 0이 아니라면 댓글 보기 추가 */}
+                                    {Object.keys(board.reples).length === 0 ? null : 
+                                        <div>
+                                            <br/>
+                                            <br/>
+                                            <hr color="#CDCDCD" width="99%" size="1"/>
+                                            {/* 답글 1개만 표출 */}
+                                            <Grid container>
+                                                <Grid item xs={12} style={{marginTop: '20px'}}>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <img src='/img/profile.jpg' alt='empty.jpg' width="40px" height="40px" style={{borderRadius: "25%"}}/>
+                                                                </td>
+                                                                <td>
+                                                                    <Typography variant="body1">
+                                                                        &nbsp;{board.reples[Object.keys(board.reples)[0]].repleId}
+                                                                    </Typography>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={12} style={{marginTop: '10px'}}>
+                                                    <Typography>
+                                                        {board.reples[Object.keys(board.reples)[0]].repleField}
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid> 
+
+                                            {/* 답글 모두 보기 */}
+                                            <Grid container>
+                                                <Grid item xs={12} style={{marginTop: '20px'}}>
+                                                    <Typography color="textSecondary" gutterBottom>
+                                                        <Link component={RouterLink} to={"detail/" + id}>
+                                                            <Button variant="text" style={{color: '#999999'}}>댓글 모두 보기</Button>
+                                                        </Link>
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid>                                               
+                                        </div>
+                                    }
+
+                                    {/* 답글 달린 갯수가 0이라면 댓글 달기 */}
+                                    {Object.keys(board.reples).length === 0 && 
+                                        <div>
+                                            {/* 답글 모두 보기 */}
+                                            <Grid container>
+                                                <Grid item xs={12} style={{marginTop: '20px'}}>
+                                                    <Typography color="textSecondary" gutterBottom>
+                                                        <Link component={RouterLink} to={"detail/" + id}>
+                                                            <Button variant="text" style={{color: '#999999'}}>댓글 달기</Button>
+                                                        </Link>
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid>                                               
+                                        </div>
+                                    }
 
                                 </CardContent>
                             </Card>

@@ -123,6 +123,9 @@ class Words extends React.Component{
 
     render(){
         const { classes } = this.props;
+        console.log("랜더링 시작");
+        console.log(this.state.words);
+
         return (
             <div>
                 {/* 맵(Map) 이용하기 */}

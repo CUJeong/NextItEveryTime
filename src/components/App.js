@@ -19,7 +19,8 @@ class App extends React.Component{
                         <Route exact path="/texts" component={Texts}/>
                         <Route exact path="/words" component={Words}/>
                         <Route exact path="/boards" component={Boards}/>
-                        <Route exact path="/detail/:textId" component={Detail}/>
+                        {/* <Route exact path="/detail/:textId" component={Detail}/> */}
+                        <Route exact path="/detail/:boardId" component={Detail}/>
                     </div>
                 </AppShell>
             </Router>
