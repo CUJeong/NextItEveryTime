@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
+import { ExitToApp } from '@material-ui/icons';
 
 const styles = {
     root: {
@@ -25,6 +26,7 @@ const styles = {
 class AppShell extends React.Component{
     constructor(props){
         super(props);
+        
         this.state = {
             toggle: false
         };
@@ -34,10 +36,16 @@ class AppShell extends React.Component{
         toggle: !this.state.toggle
     })
 
+    logout = () => {
+        window.localStorage.removeItem("userInfo");
+        location.reload();
+    }
+
     render(){
         // 아래 export 의 withStyles 파라미터인 style의 요소가 classes에 담겨 사용 가능하다.
         const { classes } = this.props;
-        
+        const member = JSON.parse(window.localStorage.getItem("userInfo"));
+
         return(
             // 하나의 큰 div 안에 여러 내용 작성해야 하는 구조
             <div>
@@ -49,17 +57,29 @@ class AppShell extends React.Component{
                                     <MenuIcon/>
                                 </IconButton>
                                 <Button color="inherit" href="/#" component={Link}>
-                                    Home
+                                    에브리타임
                                 </Button>
-                                <Button color="inherit" href="/#/Boards" component={Link}>
-                                    게시판
-                                </Button>
-                                <Button color="inherit" href="/#/Texts" component={Link}>
-                                    텍스트 관리
-                                </Button>
-                                <Button color="inherit" href="/#/Words" component={Link}>
-                                    단어 관리
-                                </Button>
+                                {window.localStorage.getItem("userInfo") === null && 
+                                    <div style={{float: "right", marginTop: "5px", marginRight: "10px"}}>
+                                        <Button color="inherit" href="/#/Login" component={Link}>
+                                            로그인
+                                        </Button>
+                                        <Button color="inherit" href="/#/Regist" component={Link} endIcon={<ExitToApp/>}>
+                                            회원가입
+                                        </Button>
+                                    </div>
+                                }
+                                {window.localStorage.getItem("userInfo") === null ? null : 
+                                    <div style={{float: "right", marginTop: "5px", marginRight: "10px"}}>
+                                        <Button className={classes.member} color="inherit" href="/#/Login" component={Link}>
+                                            {member.name} 님
+                                        </Button>
+                                        <Button className={classes.member} color="inherit" 
+                                            endIcon={<ExitToApp/>} onClick={this.logout}>
+                                            로그아웃
+                                        </Button>
+                                    </div>
+                                }
                             </Grid>
                         </Grid>
                     </AppBar>
@@ -67,17 +87,7 @@ class AppShell extends React.Component{
                     <Drawer open={this.state.toggle}>
                         <MenuItem onClick={this.handleDrawerToggle}>
                             <Link component={RouterLink} to="/">
-                                홈 화면
-                            </Link>
-                        </MenuItem>
-                        <MenuItem onClick={this.handleDrawerToggle}>
-                            <Link component={RouterLink} to="/Boards">
-                                게시판
-                            </Link>
-                        </MenuItem>
-                        <MenuItem onClick={this.handleDrawerToggle}>
-                            <Link component={RouterLink} to="/Texts">
-                                텍스트 관리
+                                에브리타임
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={this.handleDrawerToggle}>

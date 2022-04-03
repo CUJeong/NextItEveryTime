@@ -9,13 +9,15 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import MenuIcon from '@material-ui/icons/Menu';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-
-
+import IconButton from '@material-ui/core/IconButton';
+import { Tooltip } from '@material-ui/core';
+import Delete from '@material-ui/icons/Delete';
 
 const styles = theme => ({
     fab: {
@@ -44,6 +46,7 @@ class Boards extends React.Component{
             date: '',
             author: '',
             reples: {},
+            userInfo: {},
             repleId: '',
             repleField: '',
             repleDate: ''
@@ -111,6 +114,14 @@ class Boards extends React.Component{
         let nextState  = {};
         nextState[e.target.name] = e.target.value;
         this.setState(nextState);       // 현재 필드 객체인 state의 setter라고 보면 됨
+
+        if(this.state.userInfo == null){
+            if(window.confirm("글쓰기는 로그인 후 가능합니다.")){
+                document.location.href = "/#/Login";
+            }else{
+                document.location.href = "/#/Login";
+            }
+        }
     }
 
     // INSERT 함수(_post)를 실제 실행하는 함수
@@ -134,11 +145,13 @@ class Boards extends React.Component{
         const tempRepleKing = {};
         tempRepleKing[uniqueId] = tempReple;
 
+        const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+
         const board = {
             title: document.getElementById("idTitle").value,      // 사용자가 입력한게 우선 필드 state에 담기므로 이를 꺼냄
             content: document.getElementById("idContent").value,
             date: time,
-            author: '익명',
+            author: userInfo["name"],
             reples: tempRepleKing
         }
         this.handleDialogToggle();      // 다이얼로그 열린건 닫음
@@ -157,6 +170,8 @@ class Boards extends React.Component{
 
     // 모든 UI가 불러와진 경우(컴포넌트가 불러와진 경우)에 실행됨
     componentDidMount(){
+        const userInfo = JSON.parse(window.localStorage.getItem("userInfo"))
+        this.state.userInfo = userInfo;
         this._get();    // 함수 실행
     }
 
@@ -177,29 +192,33 @@ class Boards extends React.Component{
                                 <CardContent>
                                     {/* firebase database 에서 가져옴 */}
                                     <Grid container>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td rowSpan="2">
-                                                        {/* public 폴더 기준으로 경로 설정 */}
-                                                        <img src='/img/profile.jpg' alt='empty.jpg' width="60px" height="60px" style={{borderRadius: "25%"}}/>
-                                                    </td>
-                                                    <td>
-                                                        <Typography variant="h5" component="h2">
-                                                            &nbsp;{board.author}
-                                                        </Typography>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        
-                                                        <Typography color="textSecondary" gutterBottom>
-                                                            &nbsp; {board.date}
-                                                        </Typography>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <Grid item xs={12}>
+                                            <table style={{display: "inline"}}>
+                                                <tbody>
+                                                    <tr>
+                                                        <td rowSpan="2">
+                                                            {/* public 폴더 기준으로 경로 설정 */}
+                                                            <img src='/img/profile.jpg' alt='empty.jpg' width="60px" height="60px" style={{borderRadius: "25%"}}/>
+                                                        </td>
+                                                        <td>
+                                                            <Typography variant="h5" component="h2">
+                                                                &nbsp;{board.author}
+                                                            </Typography>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <Typography color="textSecondary" gutterBottom>
+                                                                &nbsp; {board.date}
+                                                            </Typography>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
+
+                                        </Grid>
                                     </Grid>
 
                                     <br/>
@@ -288,7 +307,9 @@ class Boards extends React.Component{
                 })}
 
                 <Fab color="primary" className={classes.fab} onClick={this.handleDialogToggle}>
-                    <AddIcon/>
+                    <Tooltip title="글쓰기">
+                        <AddIcon/>
+                    </Tooltip>
                 </Fab>
 
                 {/* this.state.dialog가 true일때 open 하고, 닫히면(onClose) handleDialogToggle 함수 실행 */}
@@ -297,7 +318,7 @@ class Boards extends React.Component{
                     <DialogTitle>글쓰기</DialogTitle>
                     <DialogContent>
                         <TextField id="idTitle" label="제목" type="text" name="title" onChange={this.handleValueChange}/><br/><br/>
-                        <TextField id="idContent" label="내용" type="text" name="content" onChange={this.handleValueChange}/><br/>
+                        <TextField id="idContent" multiline label="내용" type="text" name="content" onChange={this.handleValueChange}/><br/>
                     </DialogContent>
                     <br/>
                     <DialogActions>
