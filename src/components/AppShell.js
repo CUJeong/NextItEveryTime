@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
 import { ExitToApp } from '@material-ui/icons';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
     root: {
@@ -50,6 +51,7 @@ class AppShell extends React.Component{
             // 하나의 큰 div 안에 여러 내용 작성해야 하는 구조
             <div>
                 <div className={classes.root}>
+                    <img src='/img/logoHome.jpg' alt='home' width="200px" height="50px"/>
                     <AppBar position="static">
                         <Grid container>
                             <Grid item xs={12}>
@@ -84,15 +86,20 @@ class AppShell extends React.Component{
                         </Grid>
                     </AppBar>
                     {/* Drawer의 open 값이 true가 되면 자동으로 나타나며, false가 되면 들어간다. */}
-                    <Drawer open={this.state.toggle}>
+                    {/* onClose 안에 함수 넣으면, 바깥 영역 클릭하거나 esc 눌렀을때 닫음 */}
+                    <Drawer open={this.state.toggle} style={{width: "300px", padding: "40px"}} onClose={this.handleDrawerToggle}>
                         <MenuItem onClick={this.handleDrawerToggle}>
                             <Link component={RouterLink} to="/">
-                                에브리타임
+                                <br/>
+                                <img src='/img/logo.jpg' alt='home' width="140px" height="100px" style={{display: "inline"}}/>
+                                <br/><br/>
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={this.handleDrawerToggle}>
-                            <Link component={RouterLink} to="/Words">
-                                단어 관리
+                            <Link component={RouterLink} to="/Questions">
+                                <Typography variant="h6" component="h2">
+                                    문제 풀기
+                                </Typography>
                             </Link>
                         </MenuItem>
                     </Drawer>

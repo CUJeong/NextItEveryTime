@@ -7,6 +7,7 @@ import Boards from './Boards';
 import Detail from './Detail';
 import Login from './Login';
 import Regist from './Regist';
+import Questions from './Questions';
 
 class App extends React.Component{
     render(){
@@ -20,6 +21,7 @@ class App extends React.Component{
                         <Route exact path="/words" component={Words}/>
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/Regist" component={Regist}/>
+                        <Route exact path="/Questions" component={Questions}/>
                         {/* <Route exact path="/detail/:textId" component={Detail}/> */}
                         <Route exact path="/detail/:boardId" component={Detail}/>
                     </div>
