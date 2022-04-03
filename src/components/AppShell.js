@@ -73,7 +73,7 @@ class AppShell extends React.Component{
                                 }
                                 {window.localStorage.getItem("userInfo") === null ? null : 
                                     <div style={{float: "right", marginTop: "5px", marginRight: "10px"}}>
-                                        <Button className={classes.member} color="inherit" href="/#/Login" component={Link}>
+                                        <Button className={classes.member} color="inherit" href="#" component={Link}>
                                             {member.name} 님
                                         </Button>
                                         <Button className={classes.member} color="inherit" 
