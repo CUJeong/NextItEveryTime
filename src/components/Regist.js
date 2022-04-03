@@ -181,7 +181,7 @@ class Login extends React.Component{
                 <Grid item xs={12}>
                         <Card>
                             <CardContent style={{padding: "40px"}}>
-                                <div style={{position: "relative", left: "30%"}}>
+                                <div style={{position: "relative", left: "00%"}}>
                                     <Typography variant="h5" component="h2">
                                         NextIt 에브리타임 회원가입
                                     </Typography>
