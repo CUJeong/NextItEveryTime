@@ -146,6 +146,7 @@ class Detail extends React.Component{
     // 모든 UI가 불러와진 경우(컴포넌트가 불러와진 경우)에 실행됨
     componentDidMount(){
         const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+        console.log(userInfo);
         this.state.userInfo = userInfo;
         {/* 현재 주소에서 / 뒤의 파라미터 가져오는 기능 */}
         this._get(this.props.match.params.textId);    // 함수 실행
@@ -277,7 +278,8 @@ class Detail extends React.Component{
                         </CardContent>
                     </Card>
                     
-                    {this.state.userInfo.name === board.author &&
+                    {this.state.userInfo === null ? null :
+                        this.state.userInfo["name"] === board.author &&
                         <Fab className={classes.fab} onClick={() => this.handleDelete(id)} style={{backgroundColor:"#FF3232", color: "#EEEEEE"}}>
                             <Tooltip title="삭제">
                                 <Delete/>

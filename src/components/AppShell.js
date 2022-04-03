@@ -90,7 +90,6 @@ class AppShell extends React.Component{
                     <Drawer open={this.state.toggle} style={{width: "300px", padding: "40px"}} onClose={this.handleDrawerToggle}>
                         <MenuItem onClick={this.handleDrawerToggle}>
                             <Link component={RouterLink} to="/">
-                                <br/>
                                 <img src='/img/logo.jpg' alt='home' width="140px" height="100px" style={{display: "inline"}}/>
                                 <br/><br/>
                             </Link>
