@@ -51,16 +51,13 @@ class AppShell extends React.Component{
             // 하나의 큰 div 안에 여러 내용 작성해야 하는 구조
             <div>
                 <div className={classes.root}>
-                    <img src='/img/logoHome.jpg' alt='home' width="200px" height="50px"/>
+                    {/* <img src='/img/logoHome.jpg' alt='home' width="200px" height="50px"/> */}
                     <AppBar position="static">
                         <Grid container>
                             <Grid item xs={12}>
                                 <IconButton className={classes.menuButton} color="inherit" onClick={this.handleDrawerToggle}>
                                     <MenuIcon/>
                                 </IconButton>
-                                <Button color="inherit" href="/#" component={Link}>
-                                    에브리타임
-                                </Button>
                                 {window.localStorage.getItem("userInfo") === null && 
                                     <div style={{float: "right", marginTop: "5px", marginRight: "10px"}}>
                                         <Button color="inherit" href="/#/Login" component={Link}>
@@ -73,7 +70,7 @@ class AppShell extends React.Component{
                                 }
                                 {window.localStorage.getItem("userInfo") === null ? null : 
                                     <div style={{float: "right", marginTop: "5px", marginRight: "10px"}}>
-                                        <Button className={classes.member} color="inherit" href="#" component={Link}>
+                                        <Button className={classes.member} color="inherit" href="/#/Info" component={Link}>
                                             {member.name} 님
                                         </Button>
                                         <Button className={classes.member} color="inherit" 
@@ -95,9 +92,23 @@ class AppShell extends React.Component{
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={this.handleDrawerToggle}>
+                            <Link component={RouterLink} to="/">
+                                <Typography variant="h6" component="h2">
+                                    에브리타임
+                                </Typography>
+                            </Link>
+                        </MenuItem>
+                        <MenuItem onClick={this.handleDrawerToggle}>
                             <Link component={RouterLink} to="/Questions">
                                 <Typography variant="h6" component="h2">
                                     문제 풀기
+                                </Typography>
+                            </Link>
+                        </MenuItem>
+                        <MenuItem onClick={this.handleDrawerToggle}>
+                            <Link component={RouterLink} to="/Rank">
+                                <Typography variant="h6" component="h2">
+                                    랭킹
                                 </Typography>
                             </Link>
                         </MenuItem>

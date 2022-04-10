@@ -155,7 +155,9 @@ class Login extends React.Component{
         const member = {
             email: document.getElementById("idEmail").value,      // 사용자가 입력한게 우선 필드 state에 담기므로 이를 꺼냄
             name: document.getElementById("idName").value,
-            password: document.getElementById("idPassword").value
+            password: document.getElementById("idPassword").value,
+            exp: 0,
+            title: "신입 개발자"
         }
 
         if(!member.email && !member.name && !member.password){     // 사용자가 입력한 데이터가 정상적으로 작성이 되어 있지 않은 경우 false

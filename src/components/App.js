@@ -8,6 +8,8 @@ import Detail from './Detail';
 import Login from './Login';
 import Regist from './Regist';
 import Questions from './Questions';
+import Rank from './Rank';
+import Info from './Info';
 
 class App extends React.Component{
     render(){
@@ -22,6 +24,8 @@ class App extends React.Component{
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/Regist" component={Regist}/>
                         <Route exact path="/Questions" component={Questions}/>
+                        <Route exact path="/Rank" component={Rank}/>
+                        <Route exact path="/Info" component={Info}/>
                         {/* <Route exact path="/detail/:textId" component={Detail}/> */}
                         <Route exact path="/detail/:boardId" component={Detail}/>
                     </div>

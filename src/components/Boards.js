@@ -124,7 +124,7 @@ class Boards extends React.Component{
         }
     }
 
-    // INSERT 함수(_post)를 실제 실행하는 함수
+    // 글쓰기 INSERT 함수(_post)를 실제 실행하는 함수
     handleSubmit = () => {
         const time = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
         const timeId = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '')
@@ -170,7 +170,7 @@ class Boards extends React.Component{
 
     // 모든 UI가 불러와진 경우(컴포넌트가 불러와진 경우)에 실행됨
     componentDidMount(){
-        const userInfo = JSON.parse(window.localStorage.getItem("userInfo"))
+        const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
         this.state.userInfo = userInfo;
         this._get();    // 함수 실행
     }
