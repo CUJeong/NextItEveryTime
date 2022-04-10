@@ -1,9 +1,16 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
+import { withStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+
+const styles = theme => ({
+    choice: {
+        cursor: 'pointer'
+    }
+});
 
 const databaseURL = "https://nextiteverytime-default-rtdb.firebaseio.com";
 
@@ -187,7 +194,7 @@ class Questions extends React.Component{
     }
 
     render(){
-
+        const { classes } = this.props;
         return (
             <div>
                 {this.state.qList.length === 0 ? null : 
@@ -202,38 +209,30 @@ class Questions extends React.Component{
                                     <br/><br/>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Button color="inherit" onClick={this.answerOne}>
-                                                <Typography variant="h6">
-                                                    ① {this.state.qList[this.state.qIndex]["1"]}
-                                                </Typography>
-                                            </Button>
+                                            <Typography variant="h6" onClick={this.answerOne} className={classes.choice}>
+                                                ① {this.state.qList[this.state.qIndex]["1"]}
+                                            </Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Button color="inherit" onClick={this.answerTwo}>
-                                                <Typography variant="h6">
-                                                    ② {this.state.qList[this.state.qIndex]["2"]}
-                                                </Typography>
-                                            </Button>
+                                            <Typography variant="h6" onClick={this.answerTwo} className={classes.choice}>
+                                                ② {this.state.qList[this.state.qIndex]["2"]}
+                                            </Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Button color="inherit" onClick={this.answerThree}>
-                                                <Typography variant="h6">
-                                                    ③ {this.state.qList[this.state.qIndex]["3"]}
-                                                </Typography>
-                                            </Button>
+                                            <Typography variant="h6" onClick={this.answerThree} className={classes.choice}>
+                                                ③ {this.state.qList[this.state.qIndex]["3"]}
+                                            </Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Button color="inherit" onClick={this.answerFour}>
-                                                <Typography variant="h6">
-                                                    ④ {this.state.qList[this.state.qIndex]["4"]}
-                                                </Typography>
-                                            </Button>
+                                            <Typography variant="h6" onClick={this.answerFour} className={classes.choice}>
+                                                ④ {this.state.qList[this.state.qIndex]["4"]}
+                                            </Typography>
                                         </Grid>
                                     </Grid>
                                 </div>
@@ -247,4 +246,4 @@ class Questions extends React.Component{
     }
 }
 
-export default Questions;
+export default withStyles(styles)(Questions);
