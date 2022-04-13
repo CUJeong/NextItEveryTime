@@ -69,8 +69,8 @@ class Login extends React.Component{
                     return;
                 }
             }
-            alert("회원정보가 일치하지 않습니다.");
         }
+        alert("회원정보가 일치하지 않습니다.");
     }
 
     render(){
